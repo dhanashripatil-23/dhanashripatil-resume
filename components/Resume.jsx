@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { EnvelopeIcon, LinkIcon, PhoneIcon, ArrowDownTrayIcon, CodeBracketIcon, ArrowUpIcon } from "@heroicons/react/24/outline";
+import { EnvelopeIcon, LinkIcon, ArrowDownTrayIcon, CodeBracketIcon, ArrowUpIcon } from "@heroicons/react/24/outline";
 import { useRef, useState, useEffect } from "react";
 
 export default function Resume() {
@@ -42,37 +42,28 @@ export default function Resume() {
 
     setIsDownloading(true);
     try {
-      const html2canvas = (await import("html2canvas")).default;
-      const jsPDF = (await import("jspdf")).default;
+      const { default: jsPDF } = await import("jspdf");
 
       const element = resumeRef.current;
-      const canvas = await html2canvas(element, {
-        scale: 2,
-        useCORS: true,
-        logging: false,
-        backgroundColor: "#0a0a0a",
-      });
-
-      const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
-      const imgWidth = 210;
-      const pageHeight = 297;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      let heightLeft = imgHeight;
 
-      let position = 0;
-
-      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-
-      while (heightLeft >= 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
-
-      pdf.save("Dhanashri_Patil_Resume.pdf");
+      // Use html() method for text-selectable PDF
+      await pdf.html(element, {
+        callback: function(doc) {
+          doc.save("Dhanashri_Patil_Resume.pdf");
+        },
+        x: 10,
+        y: 10,
+        width: 190, // A4 width minus margins (210mm - 20mm)
+        windowWidth: element.scrollWidth,
+        html2canvas: {
+          scale: 1,
+          useCORS: true,
+          logging: false,
+          backgroundColor: "#0a0a0a",
+        },
+        autoPaging: 'text',
+      });
     } catch (error) {
       console.error("Error generating PDF:", error);
       alert("Error generating PDF. Please try again.");
@@ -186,13 +177,6 @@ export default function Resume() {
               >
                 <EnvelopeIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-cyan-400" />
                 <span>patil.dhanuu23@gmail.com</span>
-              </a>
-              <a 
-                href="tel:+918237207698"
-                className="flex items-center gap-2 px-3 py-1.5 bg-gray-900/50 rounded border border-cyan-500/20 hover:border-cyan-500/40 hover:text-cyan-400 transition-all cursor-pointer"
-              >
-                <PhoneIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-cyan-400" />
-                <span>+91 8237207698</span>
               </a>
               <a 
                 href="https://www.linkedin.com/in/patildhanashri" 

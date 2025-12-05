@@ -180,3 +180,5 @@ The download trigger is in `components/Resume.jsx` using `PDFDownloadLink`.
 
 **Note**: This is a personal portfolio project. For any questions or suggestions, please contact the author.
 
+Last Updated: 2025-12-06
+

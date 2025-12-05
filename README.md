@@ -13,7 +13,7 @@ A modern, high-end black theme resume portfolio built with Next.js 14, featuring
   - Hover animations on interactive elements
   - Smooth scroll behavior
   - Jump to top button
-- **PDF Download**: Generate and download text-selectable PDF (~1MB, optimized for HR)
+- **PDF Download**: Generate and download professional, text-selectable PDF using @react-pdf/renderer
 - **AI/QA Skills**: Comprehensive skills list including AI-powered testing and agentic testing
 - **Mac-Style Terminal**: Terminal window with Mac-like control buttons
 - **Custom Favicon**: Themed favicon matching the design
@@ -24,7 +24,7 @@ A modern, high-end black theme resume portfolio built with Next.js 14, featuring
 - **Styling**: Tailwind CSS
 - **Animations**: Framer Motion
 - **Icons**: Heroicons
-- **PDF Generation**: jsPDF (text-based, selectable PDF)
+- **PDF Generation**: @react-pdf/renderer (React-based PDF creation)
 - **Language**: React (JavaScript)
 
 ## 📦 Installation
@@ -66,7 +66,8 @@ Dhanashri-resume-UX/
 │   ├── layout.jsx           # Root layout with metadata
 │   └── page.jsx             # Main page component
 ├── components/
-│   └── Resume.jsx           # Main resume component
+│   ├── Resume.jsx           # Main resume component (Web View)
+│   └── ResumePDFTwoColumn.jsx # PDF Document Component
 ├── public/
 │   ├── favicon.svg          # Custom favicon
 │   └── resume.pdf           # Sample resume PDF
@@ -79,14 +80,14 @@ Dhanashri-resume-UX/
 ## 🎯 Key Features Explained
 
 ### PDF Download
-Click the "Download PDF" button to generate a text-selectable PDF version of the resume. 
+Click the "Download PDF" button to generate a professional PDF version of the resume.
 
 **Key Features:**
-- **Text-Selectable**: HR can select and copy text from the PDF
-- **Optimized Size**: ~1MB file size (optimized from 33MB)
-- **Text-Based**: Uses jsPDF's html() method for proper text rendering
-- **Maintains Styling**: Dark theme and all visual elements preserved
-- **A4 Format**: Standard A4 page size with proper margins
+- **React-PDF**: Uses `@react-pdf/renderer` for precise layout control
+- **Multi-Page Support**: Content flows naturally across pages with consistent sidebar
+- **Text-Selectable**: High-quality text rendering
+- **Premium Design**: Custom "Orange" theme optimized for print/PDF
+- **A4 Format**: Standard A4 page size with professional margins
 
 ### Responsive Design
 - Mobile-first approach
@@ -111,20 +112,13 @@ Includes comprehensive QA skills including:
 ## 🛠️ Customization
 
 ### Changing Colors
-Edit the color scheme in `components/Resume.jsx`:
-- Cyan: `cyan-400`, `cyan-500`, `cyan-600`
-- Emerald: `emerald-400`, `emerald-500`, `emerald-600`
-- Background: `black`, `#0a0a0a`
+Edit the color scheme in `components/Resume.jsx` (Web) or `components/ResumePDFTwoColumn.jsx` (PDF):
+- Web Theme: Dark mode with Cyan/Emerald accents
+- PDF Theme: White background with Orange accents
 
 ### Updating Content
-Edit the content directly in `components/Resume.jsx`:
-- Personal information (name, email, LinkedIn - phone number removed)
-- Work experience
-- Education
-- Skills (includes AI/Agentic testing skills)
-- Projects
-
-**Note**: Phone number has been removed from the contact section. To add it back, uncomment the phone number link in the header section.
+Edit the content directly in `components/Resume.jsx` and `components/ResumePDFTwoColumn.jsx`.
+**Note**: Ensure you update both files to keep the Web and PDF versions in sync.
 
 ### Modifying Animations
 Animation delays and durations are set in the `motion` components using Framer Motion props.
@@ -146,8 +140,7 @@ Animation delays and durations are set in the `motion` components using Framer M
   "react-dom": "18.2.0",
   "framer-motion": "10.12.16",
   "@heroicons/react": "2.1.1",
-  "jspdf": "^2.5.1",
-  "html2canvas": "^1.4.1"
+  "@react-pdf/renderer": "^3.1.12"
 }
 ```
 
@@ -164,17 +157,17 @@ This project is private and personal.
 
 ## 📋 PDF Generation Details
 
-The PDF generation uses jsPDF's `html()` method which creates a text-selectable PDF:
+The PDF generation uses `@react-pdf/renderer` to create a React component-based PDF:
 
-- **Method**: jsPDF html() with html2canvas for rendering
-- **Format**: Text-based PDF (not image-based)
-- **File Size**: Optimized to ~1MB
-- **Text Selectability**: All text is selectable and copyable
-- **Quality**: High-quality text rendering with maintained formatting
-- **Scale**: Optimized scale (1x) for balance between quality and file size
+- **Method**: React components rendered to PDF stream
+- **Format**: Native PDF text and vector graphics
+- **Layout**: Flexbox-based layout engine (Yoga)
+- **Quality**: Vector quality, perfect for printing
+- **Styling**: CSS-like StyleSheet API
 
 ### PDF Generation Code Location
-The PDF generation logic is in `components/Resume.jsx` in the `downloadPDF` function.
+The PDF document structure is defined in `components/ResumePDFTwoColumn.jsx`.
+The download trigger is in `components/Resume.jsx` using `PDFDownloadLink`.
 
 ## 🙏 Acknowledgments
 

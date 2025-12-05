@@ -374,6 +374,7 @@ export default function Resume() {
             <div className="absolute inset-0 bg-emerald-500/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
           </motion.button>
 
+          {/* PDF Download Button Hidden
           {isClient ? (
             <PDFDownloadLink
               document={<ResumePDFTwoColumn />}
@@ -398,6 +399,7 @@ export default function Resume() {
               <span className="relative z-10">Loading...</span>
             </button>
           )}
+          */}
         </div>
 
         {/* Resume Content */}
